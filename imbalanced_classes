@@ -1,0 +1,9 @@
+X = data_group1.drop(['Status'], axis=1)
+y = data_group1['Status']  
+pip install -U imbalanced-learn
+from imblearn.over_sampling import RandomOverSampler
+ros = RandomOverSampler(sampling_strategy="not majority")
+X_res, y_res = ros.fit_resample(X, y)
+ax = y_res.value_counts().plot.pie(autopct='%.2f')
+
+Reference: https://github.com/dataprofessor/imbalanced-data/blob/main/imbalanced_learn.ipynb
