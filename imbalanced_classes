@@ -6,4 +6,12 @@ ros = RandomOverSampler(sampling_strategy="not majority")
 X_res, y_res = ros.fit_resample(X, y)
 ax = y_res.value_counts().plot.pie(autopct='%.2f')
 
+# I thought it would be better to oversample rather than undersample 
+# because we have only 495 bikes with unknown status and 328 bikes with recovered status
+# compared to 26_305 stolen bikes. Oversampling would have led us to throw away more than 90% of our data.
+# I counted the data like this:
+
+data_group1['Status'].value_counts()
+
+
 Reference: https://github.com/dataprofessor/imbalanced-data/blob/main/imbalanced_learn.ipynb
