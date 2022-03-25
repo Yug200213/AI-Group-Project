@@ -1,0 +1,47 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Mar 23 15:30:10 2022
+
+@author: Yug Patel
+"""
+
+import numpy as np
+import pandas as pd
+import os
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+#Load the data set into pandas dataframe
+path="C:/Users/Yug Patel/OneDrive/Desktop/Centennial/AI Supervised Learning/"
+filename="Bicycle_Thefts.csv"
+fullpath=os.path.join(path,filename)
+data_group1=pd.read_csv(fullpath)
+
+
+print(data_group1.columns.values)
+print(data_group1.info(verbose=True))
+print(data_group1.isnull().sum())
+print(data_group1.dtypes)
+
+print(data_group1.mean())
+print(data_group1.min())
+print(data_group1.median())
+print(data_group1.max())
+print(data_group1.count())
+print(data_group1.describe())
+data_group1["Cost_of_Bike"]=data_group1["Cost_of_Bike"].fillna(data_group1["Cost_of_Bike"].median())
+data_group1=data_group1.astype(float)
+
+#hist=plt.scatter(data_yug["X"],data_yug["Longitude"])
+#hist=plt.scatter(data_yug["Y"],data_yug["Latitude"])
+
+
+Temp_data=data_group1.copy()
+Temp_data["Bike_Colour"]=Temp_data.replace(['NULL'],Temp_data["Bike_Colour"].mode())
+sns.catplot(x="Bike_Type",y="Cost_of_Bike", data=Temp_data)
+
+
+#features_with_na=[features for features in data_yug.columns if data_yug[features].isnull().sum()>1]
+
+#for feature in features_with_na:
+    
