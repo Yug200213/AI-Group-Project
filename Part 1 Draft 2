@@ -1,0 +1,77 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Mar 23 15:30:10 2022
+
+@author: Yug Patel
+"""
+
+import numpy as np
+import pandas as pd
+import os
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+#Load the data set into pandas dataframe
+path="C:/Users/Yug Patel/OneDrive/Desktop/Centennial/AI Supervised Learning/"
+filename="Bicycle_Thefts.csv"
+fullpath=os.path.join(path,filename)
+data_group1=pd.read_csv(fullpath)
+
+
+print(data_group1.columns.values)
+print(data_group1.info(verbose=True))
+print(data_group1.isnull().sum())
+print(data_group1.dtypes)
+
+print(data_group1.mean())
+print(data_group1.min())
+print(data_group1.median())
+print(data_group1.max())
+print(data_group1.count())
+print(data_group1.describe())
+data_group1["Cost_of_Bike"]=data_group1["Cost_of_Bike"].fillna(data_group1["Cost_of_Bike"].median())
+data_group1=data_group1.astype(float)
+data_group1['Status'].value_counts()
+
+#hist=plt.scatter(data_yug["X"],data_yug["Longitude"])
+#hist=plt.scatter(data_yug["Y"],data_yug["Latitude"])
+
+
+Temp_data=data_group1.copy()
+Temp_data["Bike_Colour"]=Temp_data.replace(['NULL'],Temp_data["Bike_Colour"].mode())
+sns.catplot(x="Status",y="Cost_of_Bike", data=Temp_data)
+Temp_data=Temp_data.drop(['OBJECTID_1','X','Y'],axis=1)
+#Droping the Latitude columns with the value 0
+Temp_data.drop(Temp_data.loc[Temp_data['Latitude']==0].index, inplace=True)
+
+#We converted the Occurance_Date column to the specified date formate and than change to %Y-%m-%d
+Temp_data['Occurrence_Date'] = pd.to_datetime(Temp_data.Occurrence_Date, format='%d-%m%Y')
+Temp_data['Occurrence_Date'] = Temp_data['Occurrence_Date'].dt.strftime('%Y-%m-%d')
+
+Temp_data.drop(Temp_data.loc[Temp_data['Occurrence_Year']==2009].index, inplace=True)
+Temp_data.drop(Temp_data.loc[Temp_data['Occurrence_Year']==2010].index, inplace=True)
+Temp_data.drop(Temp_data.loc[Temp_data['Occurrence_Year']==2011].index, inplace=True)
+Temp_data.drop(Temp_data.loc[Temp_data['Occurrence_Year']==2012].index, inplace=True)
+Temp_data.drop(Temp_data.loc[Temp_data['Occurrence_Year']==2013].index, inplace=True)
+
+#We have drop the duplicates value for the event unique id except first occurance
+Temp_data=Temp_data.drop_duplicates(subset=['event_unique_id'])
+Temp_data['Status'].value_counts()
+#STOLEN       23222
+#UNKNOWN        380
+#RECOVERED      258
+
+#We have removed the outliers related to the cost of bike
+Temp_data.drop(Temp_data.loc[Temp_data['Cost_of_Bike']==0].index, inplace=True)
+Temp_data.drop(Temp_data.loc[Temp_data['Cost_of_Bike']>20000].index, inplace=True)
+sns.catplot(x="Status",y="Cost_of_Bike", data=Temp_data)
+#Removing the ? and - from the Bike_Make columns
+#Temp_data.drop(Temp_data.loc[Temp_data['Bike_Make']==?].index, inplace=True)
+
+# It's having longitude and latitude valus as 0 and in graph it shows outliers
+Temp_data.drop(Temp_data.loc[Temp_data['City']=='NSA'].index, inplace=True)
+# Dropping this columns because haveing same value
+Temp_data=Temp_data.drop(['City'],axis=1)
+# We can drop the event unique id because event uniqueID is only for removing duplicates value.
+
+   
