@@ -1,0 +1,63 @@
+#serialize/save the model as an object
+import joblib 
+joblib.dump(lr, 'C:/Users/mhabayeb/Documents/courses_cen/COMP309 new/model_lr2.pkl') # replace lr with the model name in our code and correct the path
+print("Model dumped!")
+
+
+#serialize/save model columns
+
+model_columns = list([features_dataframe].columns)
+print(model_columns)
+joblib.dump(model_columns, 'C:/Users/mhabayeb/Documents/courses_cen/COMP309 new/model_columns.pkl')
+print("Models columns dumped!")
+
+#when you save the script after serializing, you should see pickled objects with .pkl extensions next to python script file
+
+#code for developing web service api
+from flask import Flask, request, jsonify
+import traceback
+import pandas as pd
+import joblib
+import sys
+# Your API definition
+app = Flask(__name__)
+@app.route("/predict", methods=['GET','POST']) #use decorator pattern for the route
+def predict():
+    if lr:
+        try:
+            json_ = request.json
+            print(json_)
+            query = pd.get_dummies(pd.DataFrame(json_))
+            query = query.reindex(columns=model_columns, fill_value=0)
+            print(query)
+            from sklearn import preprocessing
+            scaler = preprocessing.StandardScaler()
+            # Fit your data on the scaler object
+            scaled_df = scaler.fit_transform(query)
+            # return to data frame
+            query = pd.DataFrame(scaled_df, columns=model_columns)
+            print(query)
+            prediction = list(lr.predict(query))
+            print({'prediction': str(prediction)})
+            return jsonify({'prediction': str(prediction)})
+            return "Welcome to titanic model APIs!"
+
+        except:
+
+            return jsonify({'trace': traceback.format_exc()})
+    else:
+        print ('Train the model first')
+        return ('No model here to use')
+
+if __name__ == '__main__':
+    try:
+        port = int(sys.argv[1]) # This is for a command-line input
+    except:
+        port = 12345 # If you don't provide any port the port will be set to 12345
+
+    lr = joblib.load('C:/Users/mhabayeb/Documents/courses_cen/COMP309 new/model__mayy_2020.pkl') # Load "model.pkl"
+    print ('Model loaded')
+    model_columns = joblib.load('C:/Users/mhabayeb/Documents/courses_cen/COMP309 new/model_columns_mayy_202.pkl') # Load "model_columns.pkl"
+    print ('Model columns loaded')
+    app.run(port=port, debug=True)
+
