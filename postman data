@@ -1,0 +1,7 @@
+[
+    {"Occurrence_Date":20140715, "Occurrence_Year":2014, "Occurrence_Month":9, "Occurrence_DayOfWeek":6, "Occurrence_Hour":18, "Report_DayOfMonth":26, "Report_DayOfYear":266, "Division":11, "Hood_ID":84, "Premises_Type":5, "Cost_of_Bike":600, "Longitude":-79.4337, "Latitude":43.5888},
+    {"Occurrence_Date":20200925, "Occurrence_Year":2020, "Occurrence_Month":9, "Occurrence_DayOfWeek":6, "Occurrence_Hour":18, "Report_DayOfMonth":26, "Report_DayOfYear":266, "Division":11, "Hood_ID":84, "Premises_Type":5, "Cost_of_Bike":600, "Longitude":-79.4337, "Latitude":43.5888},
+    {"Occurrence_Date":20160101, "Occurrence_Year":2016, "Occurrence_Month":1, "Occurrence_DayOfWeek":5, "Occurrence_Hour":12, "Report_DayOfMonth":30, "Report_DayOfYear":90, "Division":14, "Hood_ID":82, "Premises_Type":1, "Cost_of_Bike":1000, "Longitude":-79.4052, "Latitude":43.6375},
+    {"Occurrence_Date":20160509, "Occurrence_Year":2016, "Occurrence_Month":5, "Occurrence_DayOfWeek":1, "Occurrence_Hour":19, "Report_DayOfMonth":11, "Report_DayOfYear":132, "Division":14, "Hood_ID":77, "Premises_Type":4, "Cost_of_Bike":500, "Longitude":-79.3944, "Latitude":43.6402}
+
+]
